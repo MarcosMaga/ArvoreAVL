@@ -162,7 +162,7 @@ Node* TurnLeftRight(Node *node){
 }
 
 Node* TurnRightLeft(Node *node){
-    node->right = TurnLeftRight(node->right);
+    node->right = TurnRight(node->right);
     return TurnLeft(node);
 }
 
