@@ -1,32 +1,32 @@
 #ifndef TREEBINAVL_H_INCLUDED
 #define TREEBINAVL_H_INCLUDED
 
-struct node{
+struct nodeavl{
     int info;
     int height;
-    struct node *left;
-    struct node *right;
+    struct nodeavl *left;
+    struct nodeavl *right;
 };
 
-typedef struct node Node;
+typedef struct nodeavl NodeAvl;
 
-Node* TreeInitit();
-Node* NewNode(int);
-Node* InsertNode(Node*, int);
-Node* RemoveNode(Node*, int);
-Node* MaxDir(Node*);
-Node* TurnLeft(Node*);
-Node* TurnRight(Node*);
-Node* TurnLeftRight(Node*);
-Node* TurnRightLeft(Node*);
-Node* Balance(Node*);
-void FreeTree(Node*);
-void Path(Node*, int, int);
-void PreOrder(Node*);
-void PosOrder(Node*);
-int MaxHeight(Node*);
-int GetHeight(Node*);
+NodeAvl* TreeInititAvl();
+NodeAvl* NewNode(int);
+NodeAvl* InsertNodeAvl(NodeAvl*, int);
+NodeAvl* RemoveNodeAvl(NodeAvl*, int);
+NodeAvl* TurnLeft(NodeAvl*);
+NodeAvl* TurnRight(NodeAvl*);
+NodeAvl* TurnLeftRight(NodeAvl*);
+NodeAvl* TurnRightLeft(NodeAvl*);
+NodeAvl* Balance(NodeAvl*);
+void FreeTreeAvl(NodeAvl*);
+void PathAvl(NodeAvl*, int, int);
+void PreOrderAvl(NodeAvl*);
+void PreOrderFbAvl(NodeAvl*);
+void PosOrderAvl(NodeAvl*);
+int MaxHeightAvl(NodeAvl*);
+int GetHeight(NodeAvl*);
 int GreaterHeight(int, int);
-int BalancingFactor(Node*);
+int BalancingFactor(NodeAvl*);
 
 #endif // TREEBINAVL_H_INCLUDED

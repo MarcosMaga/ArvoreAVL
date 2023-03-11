@@ -2,20 +2,20 @@
 #include <stdlib.h>
 #include "TreeBinAvl.h"
 
-Node* TreeInitit(){
+NodeAvl* TreeInititAvl(){
     return NULL;
 }
 
-void FreeTree(Node *root){
+void FreeTreeAvl(NodeAvl *root){
     if(root != NULL){
-        FreeTree(root->left);
-        FreeTree(root->right);
+        FreeTreeAvl(root->left);
+        FreeTreeAvl(root->right);
         free(root);
     }
 }
 
-Node* NewNode(int value){
-    Node *node = malloc(sizeof(Node));
+NodeAvl* NewNode(int value){
+    NodeAvl *node = malloc(sizeof(NodeAvl));
     node->info = value;
     node->left = NULL;
     node->right = NULL;
@@ -23,28 +23,28 @@ Node* NewNode(int value){
     return node;
 }
 
-Node* InsertNode(Node *root, int value){
+NodeAvl* InsertNodeAvl(NodeAvl *root, int value){
     if(root == NULL){
         return NewNode(value);
     }else{
         if(value > root->info)
-            root->right = InsertNode(root->right, value);
+            root->right = InsertNodeAvl(root->right, value);
         else if(value < root->info)
-            root->left = InsertNode(root->left, value);
+            root->left = InsertNodeAvl(root->left, value);
     }
     root->height = GreaterHeight(GetHeight(root->left), GetHeight(root->right)) + 1;
     root = Balance(root);
     return root;
 }
 
-Node* RemoveNode(Node *root, int value){
+NodeAvl* RemoveNodeAvl(NodeAvl *root, int value){
     if(root == NULL){
         return;
     }else{
         if(value > root->info)
-            root->right = RemoveNode(root->right, value);
+            root->right = RemoveNodeAvl(root->right, value);
         else if(value < root->info)
-            root->left = RemoveNode(root->left, value);
+            root->left = RemoveNodeAvl(root->left, value);
         else{
             if(root->left == NULL && root->right == NULL){
                 printf("Esse valor: %d, estamos atras de: %d\n", root->info, value);
@@ -52,25 +52,25 @@ Node* RemoveNode(Node *root, int value){
                 return NULL;
             }
             else if(root->left != NULL && root->right == NULL){
-                Node *node = malloc(sizeof(Node));
+                NodeAvl *node = malloc(sizeof(NodeAvl));
                 node = root->left;
                 free(root);
                 return node;
             }
             else if(root->left == NULL && root->right != NULL){
-                Node *node = malloc(sizeof(Node));
+                NodeAvl *node = malloc(sizeof(NodeAvl));
                 node = root->right;
                 free(root);
                 return node;
             }
             else if(root->left != NULL && root->right != NULL){
-                Node *maxDir = malloc(sizeof(Node));
+                NodeAvl *maxDir = malloc(sizeof(NodeAvl));
                 maxDir = root->left;
                 while(maxDir->right != NULL)
                     maxDir = maxDir->right;
 
                 int aux = maxDir->info;
-                root = RemoveNode(root, aux);
+                root = RemoveNodeAvl(root, aux);
                 root->info = aux;
                 return root;
             }
@@ -81,40 +81,40 @@ Node* RemoveNode(Node *root, int value){
     }
 }
 
-void Path(Node* root, int start, int finish){
+void PathAvl(NodeAvl* root, int start, int finish){
     if(root != NULL){
         if(finish == root->info)
             printf("%d", root->info);
         else{
             if(start > root->info)
-                Path(root->right, start, finish);
+                PathAvl(root->right, start, finish);
             else if(start < root->info)
-                Path(root->left, start, finish);
+                PathAvl(root->left, start, finish);
             else{
                 printf("%d ", root->info);
                 if(finish > root->info)
-                    Path(root->right, root->right->info, finish);
+                    PathAvl(root->right, root->right->info, finish);
                 else
-                    Path(root->left, root->left->info, finish);
+                    PathAvl(root->left, root->left->info, finish);
             }
         }
     }
 }
 
-int GetHeight(Node *node){
+int GetHeight(NodeAvl *node){
     if(node == NULL)
         return -1;
     return node->height;
 }
 
-int MaxHeight(Node *root){
+int MaxHeightAvl(NodeAvl *root){
     if(root == NULL)
         return 0;
     int hleft = 0, hright = 0;
     if(root->left != NULL)
-        hleft = MaxHeight(root->left);
+        hleft = MaxHeightAvl(root->left);
     if(root->right != NULL)
-        hright = MaxHeight(root->right);
+        hright = MaxHeightAvl(root->right);
     if(hleft > hright)
         return hleft + 1;
     return hright + 1;
@@ -124,14 +124,14 @@ int GreaterHeight(int a, int b){
     return (a > b)? a: b;
 }
 
-int BalancingFactor(Node *node){
+int BalancingFactor(NodeAvl *node){
     if(node != NULL)
         return (GetHeight(node->left) - GetHeight(node->right));
     return 0;
 }
 
-Node* TurnLeft(Node *node){
-    Node *nodeAux1, *nodeAux2;
+NodeAvl* TurnLeft(NodeAvl *node){
+    NodeAvl *nodeAux1, *nodeAux2;
 
     nodeAux1 = node->right;
     nodeAux2 = node->left;
@@ -143,8 +143,8 @@ Node* TurnLeft(Node *node){
     return nodeAux1;
 }
 
-Node* TurnRight(Node *node){
-    Node *nodeAux1, *nodeAux2;
+NodeAvl* TurnRight(NodeAvl *node){
+    NodeAvl *nodeAux1, *nodeAux2;
 
     nodeAux1 = node->left;
     nodeAux2 = node->right;
@@ -156,17 +156,17 @@ Node* TurnRight(Node *node){
     return nodeAux1;
 }
 
-Node* TurnLeftRight(Node *node){
+NodeAvl* TurnLeftRight(NodeAvl *node){
     node->left = TurnLeft(node->left);
     return TurnRight(node);
 }
 
-Node* TurnRightLeft(Node *node){
+NodeAvl* TurnRightLeft(NodeAvl *node){
     node->right = TurnRight(node->right);
     return TurnLeft(node);
 }
 
-Node* Balance(Node *root){
+NodeAvl* Balance(NodeAvl *root){
     int fb = BalancingFactor(root);
 
     if(fb < -1 && BalancingFactor(root->right) <= 0)
@@ -181,18 +181,26 @@ Node* Balance(Node *root){
     return root;
 }
 
-void PreOrder(Node *root){
+void PreOrderAvl(NodeAvl *root){
     if(root != NULL){
         printf("%d\n", root->info);
-        PreOrder(root->left);
-        PreOrder(root->right);
+        PreOrderAvl(root->left);
+        PreOrderAvl(root->right);
     }
 }
 
-void PosOrder(Node *root){
+void PreOrderFbAvl(NodeAvl *root){
     if(root != NULL){
-        PosOrder(root->left);
-        PosOrder(root->right);
+        printf("%d - FB:%d\n", root->info, BalancingFactor(root));
+        PreOrderFbAvl(root->left);
+        PreOrderFbAvl(root->right);
+    }
+}
+
+void PosOrderAvl(NodeAvl *root){
+    if(root != NULL){
+        PosOrderAvl(root->left);
+        PosOrderAvl(root->right);
         printf("%d\n", root->info);
     }
 }
