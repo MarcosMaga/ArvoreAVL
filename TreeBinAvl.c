@@ -81,6 +81,27 @@ NodeAvl* RemoveNodeAvl(NodeAvl *root, int value){
     }
 }
 
+NodeAvl* FindNodeAvl(NodeAvl* root, int value){
+    if(root != NULL){
+        if(root->info == value)
+            return root;
+        else
+            if(value > root->info)
+                root = FindNodeAvl(root->right, value);
+            else if(value < root->info);
+                root = FindNodeAvl(root->left, value);
+    }
+
+    return NULL;
+}
+
+int FindValueAvl(NodeAvl *root, int value){
+    NodeAvl *node = FindNodeAvl(root, value);
+    if(node != NULL)
+        return root->info;
+    return NULL;
+}
+
 void PathAvl(NodeAvl* root, int start, int finish){
     if(root != NULL){
         if(finish == root->info)
