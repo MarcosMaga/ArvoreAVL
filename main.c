@@ -23,5 +23,4 @@ int main()
     //Path(ab, 12, 6);
     //int a = Height(ab);
     //printf("\nAltura: %d", a);
-    //printf("\nBanana");
 }
