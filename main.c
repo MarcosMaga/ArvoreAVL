@@ -8,7 +8,7 @@ int main()
     srand(time(NULL));
     int num;
 
-    Node *ab = TreeInititAvl();
+    NodeAvl *ab = TreeInititAvl();
     ab = InsertNodeAvl(ab, 12);
     ab = InsertNodeAvl(ab, 4);
     ab = InsertNodeAvl(ab, 2);
